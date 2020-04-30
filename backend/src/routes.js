@@ -4,17 +4,26 @@ const routes = express.Router()
 const ProductsController = require('../controllers/ProductsController')
 const CategoriesController = require('../controllers/CategoriesController')
 const BrandsController = require('../controllers/BrandsController')
+const UserController = require('../controllers/UsersController')
+const SessionController = require('../controllers/SessionController')
+
+const authMiddleware = require('./middlewares/auth');
+
+routes.post('/login', SessionController.login)
+routes.post('/users', UserController.create)
 
 routes.get('/produtos', ProductsController.index);
-routes.post('/produtos', ProductsController.create);
 routes.get('/produtos/:id', ProductsController.indexId);
-routes.post('/categorias', CategoriesController.create);
 routes.get('/categorias', CategoriesController.index);
+routes.post('/produtos', ProductsController.create);
+routes.delete("/brands/:id", BrandsController.delete)
+routes.post('/categorias', CategoriesController.create);
 routes.post('/brands', BrandsController.create);
 routes.get('/brands', BrandsController.index);
-routes.delete("/brands/:id", BrandsController.delete)
-// routes.put('/produtos/:id', function(){})
-// routes.delete('/produtos/:id', function(){})
+// routes.get('/users', UserController.index)
+routes.use(authMiddleware);
+
+routes.get('/authenticated', (req, res) => res.send() )
 // routes.get('/produtos/estoques', function(){})
 // routes.put('/produtos/estoques', function(){})
 // routes.get('/produtos/precos', function(){})
