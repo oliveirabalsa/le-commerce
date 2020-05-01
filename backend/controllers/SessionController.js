@@ -1,7 +1,7 @@
-const connection = require('../src/database/connection');
+require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const connection = require('../src/database/connection');
 
 module.exports = {
   async login(req, res) {
@@ -16,11 +16,13 @@ module.exports = {
       const passwordCorrect = await bcrypt.compare(password, user.password);
 
       passwordCorrect ? '' : res.status(401).send('Wrong password');
+      
       return res.json({
         token: jwt.sign({ userId: user.id }, process.env.APP_SECRET, {
           expiresIn: '7d',
         }),
       });
+
     } catch (err) {
       res.status(400).send(`An error as ocurred ${err}`);
     }

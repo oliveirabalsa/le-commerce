@@ -28,11 +28,9 @@ module.exports = {
     }
   },
   async index(req, res) {
-    
     try {
       const users = await connection('users').select('*');
       res.status(200).json(users);
-    
     } catch (err) {
       res.status(400).json({ error: `an error as ocurred ${err}` });
     }
