@@ -1,2 +1,2 @@
 # Le-commerce
-My pessoal project for trainning front and backend
+project for me and my friends trainning front and backend
